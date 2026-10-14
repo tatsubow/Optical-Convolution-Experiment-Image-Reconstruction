@@ -26,7 +26,7 @@ function cfg = getDefaultConfig()
     
     % --- 4. フレーム構成設定 (Frame Structure) ---
     cfg.frame.N_pay_sym = 1512; % 1フレームあたりのペイロードシンボル数
-    cfg.frame.numImages = 1000;    % 処理する総フレーム（画像）数
+    cfg.frame.numImages = 4;    % 処理する総フレーム（画像）数
     
     % --- 5. 可視化設定 (Visualization) ---
     cfg.vis.numFramesToPlot = 4; % 波形グラフに描画するフレーム数

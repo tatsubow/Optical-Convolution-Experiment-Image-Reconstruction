@@ -62,7 +62,7 @@ function [recoveredImages, frameBoundaries] = extractFrames(t_raw, y_raw, t_supe
         sym_centers_t = pay_actual_start_t(1) + ((1:N_pay_sym) - 0.5) * T_sym;
         sym_samples   = interp1(t_raw, y_raw, sym_centers_t, 'linear', 'extrap');
         
-        % ★ 汎用カーネルマッピング関数への委譲
+        % 汎用カーネルマッピング関数への委譲
         recoveredImages{k} = reconstruct.applyKernelMapping(sym_samples, cfg);
     end
 end
