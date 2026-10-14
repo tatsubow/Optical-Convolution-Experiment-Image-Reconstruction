@@ -25,6 +25,15 @@ t_super_start = signal.detectSuperPreamble(y_raw, t_raw, Fs_meas, sp_ref, E_sp_r
 [recoveredImages, frameBoundaries] = reconstruct.extractFrames(...
     t_raw, y_raw, t_super_start, fp_ref, E_fp_r, cfg);
 
+% --- 5.5 評価指標の計算 (Evaluation) ---
+% 事前に waveform_10GSas.csv から生成して保存した正解画像をロード
+if isfile('ideal_images.mat')
+    load('ideal_images.mat', 'idealImages');
+    metrics = evaluate.calculateMetrics(recoveredImages, idealImages);
+else
+    warning('ideal_images.mat が見つかりません。評価をスキップします。');
+end
+
 % --- 6. プロット表示 ---
 vis.plotTimeline(t_raw, y_raw, t_super_start, frameBoundaries, cfg);
 vis.showImages(recoveredImages, cfg);
