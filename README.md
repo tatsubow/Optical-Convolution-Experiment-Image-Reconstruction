@@ -56,9 +56,9 @@ mkdir -p data/1bit_reconstruct
 ### 2. 正解データ（`ideal_images.mat`）の初回生成
 実験データの評価指標（MSE / PSNR / SSIM）を自動算出するために、比較基準となる正解画像データ（`ideal_images.mat`）を各ビット数のフォルダ配下に生成・保存します。
 
-1. `+config/getDefaultConfig.m` を開き、対象フォルダ配下の理想波形データパス（例: `1bit_reconstruct/waveform_10GSas.csv`）を指定し、処理フレーム数を設定します。
+1. `+config/getDefaultConfig.m` を開き、対象フォルダ配下の理想波形データパス（例: `1bit_reconstruct/conv1bit_sim.csv`）を指定し、処理フレーム数を設定します。
    ```matlab
-   cfg.io.csvPathPrimary = fullfile('data', '1bit_reconstruct', 'waveform_10GSas.csv');
+   cfg.io.csvPathPrimary = fullfile('data', '1bit_reconstruct', 'conv1bit_sim.csv');
    cfg.frame.numImages   = 1000; % 評価対象とするフレーム数
    ```
 
