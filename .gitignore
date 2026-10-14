@@ -1,0 +1,11 @@
+# Data directory (CSV and generated .mat files)
+data/
+
+# CSV or experimental data (if you put them in the project folder)
+*.csv
+
+# Output image directories
+output_images/
+
+# MATLAB auto-generated backup files
+*.asv
