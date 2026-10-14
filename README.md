@@ -47,7 +47,7 @@ mkdir -p data/1bit_reconstruct
 各サブフォルダ内に必要なデータファイルを配置します（例: `data/1bit_reconstruct/` 内）：
 * `conv1bit.csv` （実験測定データ）
 * `conv1bit_sim.csv` （シミュレーションデータ）
-* `waveform_10GSas.csv` （デジタル理想波形データ）
+* `ideal_images.mat` （デジタル理想波形データ）
 
 ※ `data/` ディレクトリ配下のすべてのファイルおよびサブフォルダは `.gitignore` 設定によりGitの管理対象外となります。
 
