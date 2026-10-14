@@ -1,5 +1,5 @@
-# MATLAB data files
-*.mat
+# Data directory (CSV and generated .mat files)
+data/
 
 # CSV or experimental data (if you put them in the project folder)
 *.csv

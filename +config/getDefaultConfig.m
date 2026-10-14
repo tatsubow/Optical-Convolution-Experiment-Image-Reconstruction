@@ -3,8 +3,8 @@ function cfg = getDefaultConfig()
     cfg = struct();
     
     % --- 1. 入出力・ファイル設定 (IO) ---
-    cfg.io.csvPathPrimary  = "C:\Users\tatsu\OneDrive\デスクトップ\elec_transmit_experiment_conv\conv1bit.csv";
-    cfg.io.csvPathFallback = 'waveform_10GSas.csv';
+    cfg.io.csvPathPrimary  = fullfile('data/1bit_reconstruct', 'conv1bit.csv');
+    cfg.io.csvPathFallback = fullfile('data/1bit_reconstruct', 'conv1bit_sim.csv');
     
     % --- 2. ハードウェア・サンプリング設定 (Hardware) ---
     cfg.hw.currAwgRate         = 16.0e9;             % 実効 16.0 GSa/s

@@ -26,19 +26,20 @@ t_super_start = signal.detectSuperPreamble(y_raw, t_raw, Fs_meas, sp_ref, E_sp_r
     t_raw, y_raw, t_super_start, fp_ref, E_fp_r, cfg);
 
 % --- 5.5 評価指標の計算 (Evaluation) ---
-% 事前に waveform_10GSas.csv から生成して保存した正解画像をロード
-if isfile('ideal_images.mat')
-    load('ideal_images.mat', 'idealImages');
+% 事前にconv1bit_sim.csv から生成して保存した正解画像をロード
+idealPath = fullfile('data/1bit_reconstruct', 'ideal_images.mat');
+
+if isfile(idealPath)
+    load(idealPath, 'idealImages');
     metrics = evaluate.calculateMetrics(recoveredImages, idealImages);
 else
-    warning('ideal_images.mat が見つかりません。評価をスキップします。');
+    warning('正解データ (%s) が見つかりません。評価をスキップします。', idealPath);
 end
-
 % --- 6. プロット表示 ---
 vis.plotTimeline(t_raw, y_raw, t_super_start, frameBoundaries, cfg);
 vis.showImages(recoveredImages, cfg);
 
-% ★ 最後の画像（1000枚目）を単独のウィンドウで表示
+% 最後の画像（1000枚目）を単独のウィンドウで表示
 figure('Name', 'Last Recovered Image', 'Color', [0.1 0.1 0.1]);
 imshow(recoveredImages{end}, []);
 title(sprintf('Frame %d (Last)', length(recoveredImages)), 'Color', 'w', 'FontSize', 14);
