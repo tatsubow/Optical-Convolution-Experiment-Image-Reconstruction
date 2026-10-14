@@ -38,6 +38,11 @@ end
 vis.plotTimeline(t_raw, y_raw, t_super_start, frameBoundaries, cfg);
 vis.showImages(recoveredImages, cfg);
 
+% ★ 最後の画像（1000枚目）を単独のウィンドウで表示
+figure('Name', 'Last Recovered Image', 'Color', [0.1 0.1 0.1]);
+imshow(recoveredImages{end}, []);
+title(sprintf('Frame %d (Last)', length(recoveredImages)), 'Color', 'w', 'FontSize', 14);
+
 fprintf('\n========================================\n');
 fprintf('【処理完了】モジュール化された処理が正常完了しました。\n');
 fprintf('========================================\n');
