@@ -1,39 +1,34 @@
 function img = applyKernelMapping(sym_samples, cfg)
-    % APPLYKERNELMAPPING - 1Dのシンボル列を任意サイズの2Dカーネルで画像空間にマッピング
+    % APPLYKERNELMAPPING - 1Dシンボル列を 28x27 の畳み込み画像へ正しく再構成
     
-    h  = cfg.recon.imageHeight;
-    w  = cfg.recon.imageWidth;
-    kh = cfg.recon.kernelHeight;
-    kw = cfg.recon.kernelWidth;
+    h  = cfg.recon.imageHeight;   % 28
+    w  = cfg.recon.imageWidth;    % 28
+    kh = cfg.recon.kernelHeight;  % 1
+    kw = cfg.recon.kernelWidth;   % 2
     
-    img = zeros(h, w);
-    count = zeros(h, w);
-    writeIdx = 1;
+    out_h = h - kh + 1; % 28 (高さ)
+    out_w = w - kw + 1; % 27 (幅)
+    total_patches = out_h * out_w; % 756
+    kernel_size   = kh * kw;       % 2
     
-    % コンボリューションの逆マッピング（Stride = 1）
-    % 例: 28x28画像, 2x1カーネルの場合、rは1〜27、cは1〜28となる
-    for r = 1 : (h - kh + 1)
-        for c = 1 : (w - kw + 1)
-            % カーネル内の各要素を走査
-            for kr = 1 : kh
-                for kc = 1 : kw
-                    if writeIdx > length(sym_samples)
-                        break;
-                    end
-                    val = sym_samples(writeIdx);
-                    writeIdx = writeIdx + 1;
-                    
-                    target_r = r + kr - 1;
-                    target_c = c + kc - 1;
-                    
-                    img(target_r, target_c)   = img(target_r, target_c) + val;
-                    count(target_r, target_c) = count(target_r, target_c) + 1;
-                end
-            end
-        end
+    % サンプル位相の設定 (1 または 2)
+    % 1パッチ内の2サンプルのうち、どちらを抽出するかでエッジの抽出特性が変わります
+    sample_phase = 2; 
+    
+    if length(sym_samples) >= total_patches * kernel_size
+        raw_vals = sym_samples(sample_phase : kernel_size : total_patches * kernel_size);
+    else
+        raw_vals = sym_samples(1 : total_patches);
     end
     
-    % 重複加算されたピクセルの平均化と正規化
-    img = img ./ max(count, 1); % 0割り算防止
-    img = (img - min(img(:))) / (max(img(:)) - min(img(:)) + 1e-12);
+    % 1行27ピクセルのデータを正しく 28x27 (高さ28, 幅27) に再構成
+    % [out_w, out_h]' とすることで、1Dデータの27要素ごとに行として転置展開されます
+    img = reshape(raw_vals(1:total_patches), [out_w, out_h])';
+    
+    % レンジ正規化（0.0 ～ 1.0）
+    minVal = min(img(:));
+    maxVal = max(img(:));
+    if maxVal > minVal
+        img = (img - minVal) / (maxVal - minVal);
+    end
 end
