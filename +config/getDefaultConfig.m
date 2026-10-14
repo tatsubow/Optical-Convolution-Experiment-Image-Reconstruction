@@ -26,16 +26,20 @@ function cfg = getDefaultConfig()
     
     % --- 4. フレーム構成設定 (Frame Structure) ---
     cfg.frame.N_pay_sym = 1512; % 1フレームあたりのペイロードシンボル数
-    cfg.frame.numImages = 4;    % 処理する総フレーム（画像）数
+    cfg.frame.numImages = 8;    % 処理する総フレーム（画像）数
     
-    % --- 5. 画像復元・カーネル設定 (Reconstruction) ---
+    % --- 5. 可視化設定 (Visualization) ---
+    cfg.vis.numFramesToPlot = 4; % 波形グラフに描画するフレーム数
+    cfg.vis.numImagesToShow = 4; % 画像として表示するフレーム数
+
+    % --- 6. 画像復元・カーネル設定 (Reconstruction) ---
     % 既存コードの 2x1 マッピングロジックと互換性を保つための設定
     cfg.recon.imageHeight  = 28;
     cfg.recon.imageWidth   = 28;
     cfg.recon.kernelHeight = 2;
     cfg.recon.kernelWidth  = 1;
     
-    % --- 6. ZNCC相関・探索設定 (Search Algorithm) ---
+    % --- 7. ZNCC相関・探索設定 (Search Algorithm) ---
     cfg.search.maxBlockSize      = 2000000;
     cfg.search.spSearchOffset    = 400e-9; % SPピークからのエッジ探索開始幅
     cfg.search.spBgNoiseWindow   = 1e-6;   % SPエッジ閾値用の背景ノイズ計算幅
